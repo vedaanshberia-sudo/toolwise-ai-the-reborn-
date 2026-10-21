@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal AI & Website Navigator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { darkbg: '#0a0a0c', cardbg: '#14141f', bordercol: '#22223b' }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
+</head>
+<body class="bg-darkbg text-gray-100 min-h-screen">
+
+    <header class="border-b border-bordercol bg-darkbg/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg">
+                    <i data-lucide="compass" class="h-6 w-6 text-white"></i>
+                </div>
+                <h1 class="font-bold text-lg">Universal Tool Finder</h1>
+            </div>
+            
+            <label class="cursor-pointer bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition">
+                <i data-lucide="upload" class="h-4 w-4"></i> Upload Custom Dataset (.json / .csv)
+                <input type="file" id="datasetFileInput" accept=".json,.csv" class="hidden">
+            </label>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <form id="searchForm" onsubmit="event.preventDefault(); handleSearch();" class="bg-cardbg border border-bordercol rounded-2xl p-6 shadow-xl space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase text-gray-400 flex items-center gap-1">
+                        1. Category / Task <span class="text-red-400">*</span>
+                    </label>
+                    <input type="text" id="categoryInput" placeholder="e.g., editing images and videos, research, writing..." required
+                        class="w-full bg-darkbg border border-bordercol rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase text-gray-400 flex items-center gap-1">
+                        2. Pricing Tier Options <span class="text-red-400">*</span>
+                    </label>
+                    <select id="pricingSelect" required class="w-full bg-darkbg border border-bordercol rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                        <option value="both">Both Free & Paid</option>
+                        <option value="free_plan">Has Free Plan / Free Tier (₹0 available)</option>
+                        <option value="paid_only">Paid Only</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase text-gray-400 flex items-center gap-1">
+                        3. Platform Type <span class="text-red-400">*</span>
+                    </label>
+                    <select id="typeSelect" required class="w-full bg-darkbg border border-bordercol rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                        <option value="both">Both AI Tools & Standard Websites</option>
+                        <option value="AI">AI Tools Only</option>
+                        <option value="Website">Standard Websites Only</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl transition flex items-center justify-center gap-2">
+                <i data-lucide="search" class="h-4 w-4"></i> Search & Rank Platforms
+            </button>
+        </form>
+
+        <section class="space-y-4">
+            <h2 id="resultStatus" class="text-sm font-medium text-gray-400">Loading dataset...</h2>
+            <div id="resultsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="emptyState" class="hidden text-center py-16 bg-cardbg border border-bordercol rounded-2xl space-y-2">
+                <i data-lucide="search-x" class="h-10 w-10 text-gray-500 mx-auto"></i>
+                <h3 class="font-semibold text-gray-300">No matching platforms found</h3>
+                <p class="text-xs text-gray-500">Try changing your category search terms or selecting 'Both' pricing models.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
